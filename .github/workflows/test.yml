@@ -1,0 +1,32 @@
+name: test
+on: [ push,workflow_dispatch ]
+jobs:
+  test:
+    runs-on: ubuntu:latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - name: Java version
+        run: java --version
+      - name: Execute the tests
+        run: ./mvnw clean test
+  build:
+    needs: test
+    runs-on: ubuntu:latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - name: Build the application
+        run: ./mvnw clean test
+      - name: show the contents of target folder
+        run: ls target
