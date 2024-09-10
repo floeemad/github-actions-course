@@ -2,7 +2,7 @@ name: test
 on: [ push,workflow_dispatch ]
 jobs:
   test:
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -17,7 +17,7 @@ jobs:
         run: ./mvnw clean test
   build:
     needs: test
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -27,6 +27,6 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
       - name: Build the application
-        run: ./mvnw clean test
+        run: ./mvnw clean package
       - name: show the contents of target folder
         run: ls target
